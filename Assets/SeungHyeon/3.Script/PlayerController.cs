@@ -7,8 +7,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Vector3 moveDirection;
+
     public float defaultSpeed = 4f;
     [SerializeField] public float currentSpeed;
+    [SerializeField] private float Maxstamina = 100f;
+    [SerializeField] private float currentstamina;
+    [SerializeField] private bool isRunning = false;
     private Animator player_anim;
 
     public InputAction move;
@@ -43,19 +47,22 @@ public class PlayerController : MonoBehaviour
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
         var isRun = context.ReadValueAsButton();
-        if (isRun)
+        if (isRun && currentstamina >= 0)
+            isRunning = true;
             currentSpeed = defaultSpeed * 2f;
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         currentSpeed = defaultSpeed;
+        isRunning = false;
     }
 
     private void Awake()
     {
         TryGetComponent(out player_anim);
         currentSpeed = defaultSpeed;
+        currentstamina = Maxstamina;
     }
     private void Update()
     {
@@ -64,6 +71,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(moveDirection);
             transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+            Debug.Log(isRunning);
+            if(isRunning)
+            {
+                currentstamina--;
+            }
             player_anim.SetInteger("AnimationPar", 1);
         }
         else
@@ -82,8 +94,15 @@ public class PlayerController : MonoBehaviour
     private void OnRun(InputValue value)
     {
         if (value.isPressed)
+        {
+            Debug.Log("´­¸²");
             currentSpeed = defaultSpeed * 2f;
+        }
         else
             currentSpeed = defaultSpeed;
+    }
+    public void VibrationPad()
+    {
+
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Dead
   - Slow
   - Slide
+  - Wall
   layers:
   - Default
   - TransparentFX
