@@ -25,15 +25,22 @@ public class Meteor_Movement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
+        int layer = col.gameObject.layer;
         
-        if (gameObject.activeSelf)
+        if (gameObject.activeSelf && layer == LayerMask.NameToLayer("Ground"))
         {
             if (gameObject.CompareTag("Meteor"))
             {
-                Debug.Log("a");
+                Debug.Log("기본 메테오 충돌");
                 Meteor_Pooling.instance.ReturnToQueue(gameObject);
             }
+            else if(gameObject.CompareTag("Dead")|| gameObject.CompareTag("Slide")|| gameObject.CompareTag("Slow"))
+            {
+                Debug.Log("특수 메테오 충돌");
+                Destroy(gameObject);
+            }
         }
+        
     }
     private void Falling()
     {
@@ -46,9 +53,11 @@ public class Meteor_Movement : MonoBehaviour
         {
             FallingSpeed = 150f + (100f * Wave);
         }
-        else if (name.Equals("Meteor_Dead")|| name.Equals("Meteor_Slide")|| name.Equals("Meteor_Slow"))
+        else if (tag.Equals("Dead")|| tag.Equals("Slide")|| tag.Equals("Slow"))
         {
             FallingSpeed = 100f;
         }
     }
+
+    
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5587660030721728778}
   m_Layer: 0
   m_Name: Meteor_Slow
-  m_TagString: Untagged
+  m_TagString: Slow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
