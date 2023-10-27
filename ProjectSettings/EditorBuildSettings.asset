@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Main/MainScene.unity
+    guid: 1f6acadde8b2610469061b28b0619cb9
+  - enabled: 1
+    path: Assets/ChanHyeok/1.Scene/WooChan.unity
+    guid: 0ec718fc5e6123c46b3f2db21d56d2cf
+  - enabled: 1
+    path: Assets/SangWoo/1.Scene/SWP.unity
+    guid: f8f0b75c31f21c24cbf08db1f75d0b0c
+  - enabled: 1
+    path: Assets/SeungHyeon/1.Scene/PlayerScene.unity
+    guid: 5d529998765b3404bb6de1889e2131f4
+  - enabled: 1
+    path: Assets/WonYong/1.Scene/WonYong.unity
+    guid: 78cca51aeb6abe54382944bdb5f49b30
   m_configObjects: {}
