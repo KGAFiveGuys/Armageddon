@@ -53,7 +53,7 @@ public class Meteor_Pooling : MonoBehaviour
         GameObject meteor = Instantiate(meteor_prefeb, Spawn_position, Quaternion.identity);
         meteor.transform.SetParent(transform);
         meteor.SetActive(false);
-
+        ObjectPool.Enqueue(meteor);
         return meteor;
     }
 
@@ -83,9 +83,9 @@ public class Meteor_Pooling : MonoBehaviour
         {
             GameObject meteor = ObjectPool.Dequeue();
 
-            meteor.gameObject.SetActive(true);
+            meteor.SetActive(true);
             //meteor.gameObject.transform.SetParent(null);
-            return meteor;
+            return meteor_prefeb;
         }
         else
         {
