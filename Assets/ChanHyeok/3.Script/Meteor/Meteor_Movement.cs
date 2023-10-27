@@ -44,7 +44,7 @@ public class Meteor_Movement : MonoBehaviour
     {
         if (tag == "Meteor")
         {
-            FallingSpeed = 150f + (50f * Wave);
+            FallingSpeed = 150f + (100f * Wave);
         }
         else if (name.Equals("Meteor_Dead")|| name.Equals("Meteor_Slide")|| name.Equals("Meteor_Slow"))
         {

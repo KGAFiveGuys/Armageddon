@@ -262,13 +262,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86eee4ce10b7ebf4dbad8794fb69ba6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawn_minX: -2.5
-  Spawn_maxX: 8.5
-  Spawn_minZ: -2.5
-  Spawn_maxZ: 8.5
+  Spawn_minX: -11.5
+  Spawn_maxX: 11.5
+  Spawn_minZ: -11.5
+  Spawn_maxZ: 11.5
   Spawn_Y: 20
-  minDelay: 0.3
-  maxDelay: 2
+  minDelay: 0.01
+  maxDelay: 1
   meteor_prefeb: {fileID: 5114787890146527689, guid: 17f213eb0def6dd468596ee3eeb818a3, type: 3}
   Wave: 1
 --- !u!4 &272238919
