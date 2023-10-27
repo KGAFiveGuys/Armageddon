@@ -8,6 +8,7 @@ public class SFX_Audio : MonoBehaviour
     public AudioSource audioSource;
     //----audioclip //
     public AudioClip Jump;
+    public AudioClip ¿î¼®;
 
     private void Awake()
     {
