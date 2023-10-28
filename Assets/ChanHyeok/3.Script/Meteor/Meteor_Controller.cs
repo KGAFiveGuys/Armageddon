@@ -31,11 +31,13 @@ public class Meteor_Controller : MonoBehaviour
             {
                 Debug.Log("기본 메테오 충돌");
                 Meteor_Pooling.instance.ReturnToQueue(gameObject);
+                DestroySound.instance.PlayDestroySound(0);
             }
             else if(gameObject.CompareTag("Dead")|| gameObject.CompareTag("Slide")|| gameObject.CompareTag("Slow"))
             {
                 Debug.Log("특수 메테오 충돌");
                 Destroy(gameObject);
+                DestroySound.instance.PlayDestroySound(1);
             }
         }
         

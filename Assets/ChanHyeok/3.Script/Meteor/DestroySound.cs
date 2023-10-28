@@ -19,9 +19,22 @@ public class DestroySound : MonoBehaviour
         }
     }
 
-    [SerializeField] private AudioSource[] Audios;
+    [SerializeField] private AudioClip[] Clips;
+    [SerializeField] private AudioSource[] AudioSources;
 
 
+    public void PlayDestroySound(int index) // 0 Default 1 Special
+    {
+        for (int i = 0; i < AudioSources.Length; i++)
+        {
+            if (!AudioSources[i].isPlaying)
+            {
+                AudioSources[i].clip = Clips[index];
+                AudioSources[i].Play();
+                break;
+            }
+        }
+    }
 
 
 }
