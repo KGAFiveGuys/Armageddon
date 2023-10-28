@@ -15,8 +15,8 @@ public class Meteor_Pooling : MonoBehaviour
     private Vector3 Spawn_position;
 
     [Header("생성 딜레이 설정")]
-    [SerializeField] private float minDelay = 0.3f;
-    [SerializeField] private float maxDelay = 2f;
+    [SerializeField] private float minDelay = 0.01f;
+    [SerializeField] private float maxDelay = 1f;
 
     [Space(50f)]
 
