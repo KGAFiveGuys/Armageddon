@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -9,10 +10,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
 
     public float defaultSpeed = 4f;
+
+    [SerializeField] private Slider StaminaSlider;
+
     [SerializeField] public float currentSpeed;
     [SerializeField] private float Maxstamina = 100f;
     [SerializeField] private float currentstamina;
     [SerializeField] private bool isRunning = false;
+
     private Animator player_anim;
 
     public InputAction move;
@@ -60,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        StaminaSlider = StaminaSlider.GetComponent<Slider>();
         TryGetComponent(out player_anim);
         currentSpeed = defaultSpeed;
         currentstamina = Maxstamina;
@@ -70,12 +76,11 @@ public class PlayerController : MonoBehaviour
         if(hasControl)
         {
             transform.rotation = Quaternion.LookRotation(moveDirection);
-            transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
-            Debug.Log(isRunning);
-            if(isRunning)
+            if(currentstamina <= 0)
             {
-                currentstamina--;
+                currentSpeed = defaultSpeed;
             }
+            transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
             player_anim.SetInteger("AnimationPar", 1);
         }
         else
@@ -95,14 +100,46 @@ public class PlayerController : MonoBehaviour
     {
         if (value.isPressed)
         {
-            Debug.Log("눌림");
+            Debug.Log("쉬프트 누름");
+            StopCoroutine(FillStamina());
+            StartCoroutine(UseStamina());
             currentSpeed = defaultSpeed * 2f;
         }
         else
+        {
+            Debug.Log("쉬프트 떼짐");
+            StopCoroutine(UseStamina());
+            StartCoroutine(FillStamina());
             currentSpeed = defaultSpeed;
+        }
     }
-    public void VibrationPad()
+    private IEnumerator UseStamina()
     {
-
+        isRunning = true;
+        while (currentstamina > 0 && isRunning)
+        {
+            currentstamina -= 10f * Time.deltaTime;
+            StaminaSlider.value = currentstamina;
+            yield return null;
+        }
+        if (currentstamina <= 0)
+        {
+            currentstamina = 0;
+        }
+    }
+    private IEnumerator FillStamina()
+    {
+        isRunning = false;
+        yield return new WaitForSeconds(1);
+        while(currentstamina <= Maxstamina && !isRunning)
+        {
+            currentstamina += 5f * Time.deltaTime;
+            StaminaSlider.value = currentstamina;
+            yield return null;
+        }
+        if(currentstamina >= Maxstamina)
+        {
+            currentstamina = Maxstamina;
+        }
     }
 }
