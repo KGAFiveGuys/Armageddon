@@ -2,13 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     private Vector3 moveDirection;
+
     public float defaultSpeed = 4f;
+
+    [SerializeField] private Slider StaminaSlider;
+
     [SerializeField] public float currentSpeed;
+    [SerializeField] private float Maxstamina = 100f;
+    [SerializeField] private float currentstamina;
+    [SerializeField] private bool isRunning = false;
+
     private Animator player_anim;
 
     public InputAction move;
@@ -43,19 +52,23 @@ public class PlayerController : MonoBehaviour
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
         var isRun = context.ReadValueAsButton();
-        if (isRun)
+        if (isRun && currentstamina >= 0)
+            isRunning = true;
             currentSpeed = defaultSpeed * 2f;
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         currentSpeed = defaultSpeed;
+        isRunning = false;
     }
 
     private void Awake()
     {
+        StaminaSlider = StaminaSlider.GetComponent<Slider>();
         TryGetComponent(out player_anim);
         currentSpeed = defaultSpeed;
+        currentstamina = Maxstamina;
     }
     private void Update()
     {
@@ -63,6 +76,10 @@ public class PlayerController : MonoBehaviour
         if(hasControl)
         {
             transform.rotation = Quaternion.LookRotation(moveDirection);
+            if(currentstamina <= 0)
+            {
+                currentSpeed = defaultSpeed;
+            }
             transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
             player_anim.SetInteger("AnimationPar", 1);
         }
@@ -82,8 +99,47 @@ public class PlayerController : MonoBehaviour
     private void OnRun(InputValue value)
     {
         if (value.isPressed)
+        {
+            Debug.Log("½¬ÇÁÆ® ´©¸§");
+            StopCoroutine(FillStamina());
+            StartCoroutine(UseStamina());
             currentSpeed = defaultSpeed * 2f;
+        }
         else
+        {
+            Debug.Log("½¬ÇÁÆ® ¶¼Áü");
+            StopCoroutine(UseStamina());
+            StartCoroutine(FillStamina());
             currentSpeed = defaultSpeed;
+        }
+    }
+    private IEnumerator UseStamina()
+    {
+        isRunning = true;
+        while (currentstamina > 0 && isRunning)
+        {
+            currentstamina -= 10f * Time.deltaTime;
+            StaminaSlider.value = currentstamina;
+            yield return null;
+        }
+        if (currentstamina <= 0)
+        {
+            currentstamina = 0;
+        }
+    }
+    private IEnumerator FillStamina()
+    {
+        isRunning = false;
+        yield return new WaitForSeconds(1);
+        while(currentstamina <= Maxstamina && !isRunning)
+        {
+            currentstamina += 5f * Time.deltaTime;
+            StaminaSlider.value = currentstamina;
+            yield return null;
+        }
+        if(currentstamina >= Maxstamina)
+        {
+            currentstamina = Maxstamina;
+        }
     }
 }
