@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour
             {
                 currentSpeed = defaultSpeed;
             }
-            player_rb.MovePosition(player_rb.position + moveDirection * currentSpeed * Time.deltaTime);
+            //player_rb.MovePosition(player_rb.position + moveDirection * currentSpeed * Time.deltaTime);
+            player_rb.AddForce(moveDirection * currentSpeed);
             player_anim.SetInteger("AnimationPar", 1);
         }
         else
