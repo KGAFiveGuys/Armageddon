@@ -18,8 +18,8 @@ public class TileAction : MonoBehaviour
     [SerializeField] private Collider Meteo;
     [SerializeField] private MeshRenderer TileMat;
     [SerializeField] private Material[] Mats = new Material[4];
-    private MeshCollider Friction;
-    [SerializeField] private float frictionForce = 1.2f;
+    [SerializeField] private MeshCollider TilePhysicMat;
+    [SerializeField] private PhysicMaterial[] PhysicMats = new PhysicMaterial[3];
 
     [SerializeField] private int Timer = 3;
     private float timeFlow = 0;
@@ -30,7 +30,7 @@ public class TileAction : MonoBehaviour
         TryGetComponent(out Player);
         TryGetComponent(out Meteo);
         TryGetComponent(out TileMat);
-        TryGetComponent(out Friction);
+        TryGetComponent(out TilePhysicMat);
     }
 
     private void Update()
@@ -58,6 +58,7 @@ public class TileAction : MonoBehaviour
     private void Default()
     {
         TileMat.material = Mats[0];
+        TilePhysicMat.material = PhysicMats[0];
     }
 
     private void Dead()
@@ -69,12 +70,14 @@ public class TileAction : MonoBehaviour
     private void Slow()
     {
         TileMat.material = Mats[2];
+        TilePhysicMat.material = PhysicMats[1];
         TimeCheck();
     }
 
     private void Slide()
     {
         TileMat.material = Mats[3];
+        TilePhysicMat.material = PhysicMats[2];
         TimeCheck();
     }
 
@@ -93,24 +96,24 @@ public class TileAction : MonoBehaviour
             //**메테오 없애줭
         }
 
-        //Dead : 플레이어 사망
-        if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
-        {
-            //**플레이어 사망처리 해줭
-        }
+        ////Dead : 플레이어 사망
+        //if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
+        //{
+        //    //**플레이어 사망처리 해줭
+        //}
 
-        //Slow : 마찰력 증가
-        if (currentTile == TileType.Slow && collision.collider.tag.Equals("Player"))
-        {
-            Friction.material.dynamicFriction = frictionForce;
-        }
+        ////Slow : 마찰력 증가
+        //if (currentTile == TileType.Slow && collision.collider.tag.Equals("Player"))
+        //{
+        //    Friction.material.dynamicFriction = frictionForce;
+        //}
 
-        //Slide : 마찰력 zero
-        if (currentTile == TileType.Slide && collision.collider.tag.Equals("Player"))
-        {
-            Friction.material.dynamicFriction = 0;
-            //**플레이어 조작 불가 해줭
-        }
+        ////Slide : 마찰력 zero
+        //if (currentTile == TileType.Slide && collision.collider.tag.Equals("Player"))
+        //{
+        //    Friction.material.dynamicFriction = 0;
+        //    //**플레이어 조작 불가 해줭
+        //}
     }
 
     //타이머함수(일정시간 후 기본타일로 변환)
@@ -121,10 +124,10 @@ public class TileAction : MonoBehaviour
         {
             currentTile = TileType.Default;
             timeFlow = 0;
-            if (Friction.material.dynamicFriction != 0.6f)
-            {
-                Friction.material.dynamicFriction = 0.6f;
-            }
+            //if (Friction.material.dynamicFriction != 0.6f)
+            //{
+            //    Friction.material.dynamicFriction = 0.6f;
+            //}
         }
     }
 }
