@@ -114,9 +114,9 @@ MonoBehaviour:
   Meteo: {fileID: 0}
   TileMat: {fileID: 0}
   Mats:
-  - {fileID: 2100000, guid: 325980c545ba2d248b8d72334fe2ec9e, type: 2}
-  - {fileID: 2100000, guid: e1dad891c286f7743872b9d98e22a7d7, type: 2}
-  - {fileID: 2100000, guid: 929b5febab72c9c4bb6208401b4150dd, type: 2}
-  - {fileID: 2100000, guid: eca94c5ee3a886c4ea04c415d18d3660, type: 2}
+  - {fileID: 2100000, guid: d75ed8d8ef0366d448e7c8c06166aaf7, type: 2}
+  - {fileID: 2100000, guid: 299166cc9328e484ba27f7c6c60bcc79, type: 2}
+  - {fileID: 2100000, guid: 9a526ccb9696d6545b3991e93bfb18bd, type: 2}
+  - {fileID: 2100000, guid: bbb823d717bf5b8419eb0811b16c1d7f, type: 2}
   frictionForce: 1.2
-  Timer: 3
+  Timer: 7
