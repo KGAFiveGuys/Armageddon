@@ -118,5 +118,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 299166cc9328e484ba27f7c6c60bcc79, type: 2}
   - {fileID: 2100000, guid: 9a526ccb9696d6545b3991e93bfb18bd, type: 2}
   - {fileID: 2100000, guid: bbb823d717bf5b8419eb0811b16c1d7f, type: 2}
-  frictionForce: 1.2
+  TilePhysicMat: {fileID: 0}
+  PhysicMats:
+  - {fileID: 13400000, guid: 9cb5583f7e083c24cbb2e60243c1c788, type: 2}
+  - {fileID: 13400000, guid: 174de6b6acf7d804b935a7f3fd152808, type: 2}
+  - {fileID: 13400000, guid: 83f47a57851671d48ae3777a34746e39, type: 2}
   Timer: 7
