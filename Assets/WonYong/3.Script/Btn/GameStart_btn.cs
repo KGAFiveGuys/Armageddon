@@ -5,15 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameStart_btn : MonoBehaviour
 {
-    public GameObject Gamemanager;
-    public GameObject Score;
-    public GameObject Best;
     public void Start_MainGame_btn()
     {
-        SceneManager.LoadScene("MainScene");
-        Gamemanager.SetActive(true);
-        Score.SetActive(true);
-        Best.SetActive(true);
-        Destroy(gameObject);
+        GameObject[] gameObjectsInMainScene = GameObject.FindObjectsOfType<GameObject>();
+        foreach (var obj in gameObjectsInMainScene)
+        {
+            Destroy(obj);
+        }
+
+        SceneLoader.Instance.UnloadScenes();
+        SceneLoader.Instance.Start_Game();
     }
+
 }

@@ -24,11 +24,26 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    public void UnloadScenes()
+    {
+        foreach (var scene in sceneList)
+        {
+            SceneManager.UnloadSceneAsync(scene);
+        }
+    }
+
     private void Start()
+    {
+        Start_Game();
+    }
+
+    public void Start_Game()
     {
         foreach (var scene in sceneList)
         {
             SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
     }
+
+
 }
