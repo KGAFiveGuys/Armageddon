@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentstamina;
     [SerializeField] private bool isRunning = false;
 
+    private Rigidbody player_rb;
+
     private Animator player_anim;
 
     public InputAction move;
@@ -69,18 +71,19 @@ public class PlayerController : MonoBehaviour
         TryGetComponent(out player_anim);
         currentSpeed = defaultSpeed;
         currentstamina = Maxstamina;
+        TryGetComponent(out player_rb);
     }
-    private void Update()
+    private void FixedUpdate()
     {
         bool hasControl = (moveDirection != Vector3.zero);
         if(hasControl)
         {
-            transform.rotation = Quaternion.LookRotation(moveDirection);
+            transform.forward = moveDirection;
             if(currentstamina <= 0)
             {
                 currentSpeed = defaultSpeed;
             }
-            transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+            player_rb.MovePosition(player_rb.position + moveDirection * currentSpeed * Time.deltaTime);
             player_anim.SetInteger("AnimationPar", 1);
         }
         else
