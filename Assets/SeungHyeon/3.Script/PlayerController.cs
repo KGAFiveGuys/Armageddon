@@ -248,8 +248,33 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
-    public void ToggleShield(bool flag)
+    private IEnumerator currentShield;
+    public void ToggleShield(float duration)
 	{
-        playerShield.SetActive(flag);
+		// 코루틴 시작
+		if (currentShield != null)
+            StopCoroutine(currentShield);
+
+        currentShield = SetInvincible(duration);
+        StartCoroutine(currentShield);
+    }
+
+    [SerializeField] private float elapsedTime;
+    private IEnumerator SetInvincible(float duration)
+    {
+        IsInvincible = true;
+        playerShield.SetActive(true);
+
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        playerShield.SetActive(false);
+        IsInvincible = false;
+
+        currentShield = null;
     }
 }

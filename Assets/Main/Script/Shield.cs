@@ -20,34 +20,9 @@ public class Shield : MonoBehaviour, IGameItem
 		playerController = FindObjectOfType<PlayerController>();
 	}
 
-	private IEnumerator currentShield;
 	public void TriggerItemEffect()
 	{
-		collider.enabled = false;
-		renderer.enabled = false;
-
-		if (currentShield != null)
-			StopCoroutine(currentShield);
-
-		currentShield = SetInvincible(duration);
-		StartCoroutine(currentShield);
-	}
-
-	[SerializeField] private float elapsedTime;
-	private IEnumerator SetInvincible(float duration)
-	{
-		playerController.IsInvincible = true;
-		playerController.ToggleShield(true);
-
-		elapsedTime = 0f;
-		while (elapsedTime < duration)
-		{
-			elapsedTime += Time.deltaTime;
-			yield return null;
-		}
-
-		playerController.ToggleShield(false);
-		playerController.IsInvincible = false;
+		playerController.ToggleShield(duration);
 		Destroy(gameObject);
 	}
 }
