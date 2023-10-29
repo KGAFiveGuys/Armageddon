@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     private Vector3 moveDirection;
 
-    public float defaultSpeed = 4f;
+    public float defaultSpeed = 20f;
 
     [SerializeField] private Slider StaminaSlider;
 
@@ -22,48 +22,49 @@ public class PlayerController : MonoBehaviour
 
     private Animator player_anim;
 
+    private TileAction Tiletype;
     public InputAction move;
     public InputAction run;
+    private RaycastHit hit;
+    //private void OnEnable()
+    //{
+    //    move.performed += OnMovePerformed;
+    //    run.performed += OnRunPerformed;
+    //    run.canceled += OnRunCanceled;
 
-    private void OnEnable()
-    {
-        move.performed += OnMovePerformed;
-        run.performed += OnRunPerformed;
-        run.canceled += OnRunCanceled;
+    //    move.Enable();
+    //    run.Enable();
+    //}
 
-        move.Enable();
-        run.Enable();
-    }
+    //private void OnDestroy()
+    //{
+    //    move.Disable();
+    //    run.Disable();
 
-    private void OnDestroy()
-    {
-        move.Disable();
-        run.Disable();
+    //    move.performed -= OnMovePerformed;
+    //    run.performed -= OnRunPerformed;
+    //    run.canceled -= OnRunCanceled;
+    //}
 
-        move.performed -= OnMovePerformed;
-        run.performed -= OnRunPerformed;
-        run.canceled -= OnRunCanceled;
-    }
+    //private void OnMovePerformed(InputAction.CallbackContext context)
+    //{
+    //    var v = context.ReadValue<Vector2>();
+    //    moveDirection = new Vector3(v.x, 0f, v.y);
+    //}
 
-    private void OnMovePerformed(InputAction.CallbackContext context)
-    {
-        var v = context.ReadValue<Vector2>();
-        moveDirection = new Vector3(v.x, 0f, v.y);
-    }
+    //private void OnRunPerformed(InputAction.CallbackContext context)
+    //{
+    //    var isRun = context.ReadValueAsButton();
+    //    if (isRun && currentstamina >= 0)
+    //        isRunning = true;
+    //        currentSpeed = defaultSpeed * 2f;
+    //}
 
-    private void OnRunPerformed(InputAction.CallbackContext context)
-    {
-        var isRun = context.ReadValueAsButton();
-        if (isRun && currentstamina >= 0)
-            isRunning = true;
-            currentSpeed = defaultSpeed * 2f;
-    }
-
-    private void OnRunCanceled(InputAction.CallbackContext context)
-    {
-        currentSpeed = defaultSpeed;
-        isRunning = false;
-    }
+    //private void OnRunCanceled(InputAction.CallbackContext context)
+    //{
+    //    currentSpeed = defaultSpeed;
+    //    isRunning = false;
+    //}
 
     private void Awake()
     {
@@ -75,6 +76,12 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
+        if(Physics.Raycast(transform.position, Vector3.down,out hit))
+        {
+            Tiletype = hit.transform.GetComponent<TileAction>();
+            Debug.Log(Tiletype.currentTile);
+        }
         bool hasControl = (moveDirection != Vector3.zero);
         if(hasControl)
         {
@@ -84,7 +91,7 @@ public class PlayerController : MonoBehaviour
                 currentSpeed = defaultSpeed;
             }
             //player_rb.MovePosition(player_rb.position + moveDirection * currentSpeed * Time.deltaTime);
-            player_rb.AddForce(moveDirection * currentSpeed);
+            player_rb.AddForce(moveDirection.normalized * currentSpeed,ForceMode.Force);
             player_anim.SetInteger("AnimationPar", 1);
         }
         else
