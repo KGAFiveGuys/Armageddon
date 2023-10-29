@@ -14,7 +14,6 @@ public class Special_Meteor : MonoBehaviour
 
     [SerializeField] private GameObject[] Meteors;
 
-
     private void Start()
     {
         StartCoroutine(Spawn_Special_Meteor());
@@ -42,5 +41,4 @@ public class Special_Meteor : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
     }
-
 }

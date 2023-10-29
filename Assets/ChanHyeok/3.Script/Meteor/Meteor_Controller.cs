@@ -67,6 +67,13 @@ public class Meteor_Controller : MonoBehaviour
         }
         else if (gameObject.activeSelf && col.gameObject.CompareTag("Player"))
         {
+            // 무적이면 사망하지 않고 메테오 제거
+            if (playerController.IsInvincible)
+			{
+                Destroy(gameObject);
+                return;
+            }
+
             col.gameObject.GetComponent<PlayerController>().Die();
 
             if (gameObject.CompareTag("Meteor"))
@@ -82,8 +89,6 @@ public class Meteor_Controller : MonoBehaviour
                 Debug.Log("플레이어 특수 메테오 충돌");
             }
         }
-
-
     }
     private void Falling()
     {

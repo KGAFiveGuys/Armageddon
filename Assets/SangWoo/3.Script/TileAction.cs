@@ -24,6 +24,9 @@ public class TileAction : MonoBehaviour
     [SerializeField] private int Timer = 3;
     private float timeFlow = 0;
 
+    [SerializeField] private GameObject ItemShieldPrefab;
+    [SerializeField] private GameObject ItemRemoverPrefab;
+    [SerializeField] private Vector3 itemPositionOffset = Vector3.up * 2;
 
     private void Start()
     {
@@ -109,7 +112,11 @@ public class TileAction : MonoBehaviour
         // 플레이어가 이미 Tile에 올라간 상태에서 Tile이 변경 되면 적용되지 않음
         if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().Die();
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+			if (!playerController.IsInvincible)
+			{
+                collision.gameObject.GetComponent<PlayerController>().Die();
+            }
         }
     }
 
@@ -122,6 +129,16 @@ public class TileAction : MonoBehaviour
             elapsdeTime += Time.deltaTime;
             yield return null;
 		}
+
+        // 특수 타일이면 사라질 때 아이템 생성
+		if (!currentTile.Equals(TileType.Default))
+		{
+            if (Random.Range(0, 2) == 0)
+                Instantiate(ItemShieldPrefab, transform.position + itemPositionOffset, Quaternion.identity);
+            else
+                Instantiate(ItemRemoverPrefab, transform.position + itemPositionOffset, Quaternion.identity);
+        }
+
         currentTile = TileType.Default;
         TileMat.material = Mats[0];
         TilePhysicMat.material = PhysicMats[0];
@@ -130,7 +147,7 @@ public class TileAction : MonoBehaviour
     //타이머함수(일정시간 후 기본타일로 변환)
     private void TimeCheck()
     {
-		//timeFlow += Time.deltaTime;
+		//timeFlow += Time.deltaTime;   
 		//if (timeFlow >= Timer)
 		//{
 		//    currentTile = TileType.Default;

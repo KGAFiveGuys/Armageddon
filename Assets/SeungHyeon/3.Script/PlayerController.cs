@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private Vector3 moveDirection;
+    [SerializeField] private GameObject playerShield;
+    [field:SerializeField] public bool IsInvincible { get; set; } = false;
+
+	private Vector3 moveDirection;
 
     public float defaultSpeed = 20f;
 
@@ -86,6 +89,9 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerVibration(Explosion explosion)
 	{
+        if (Gamepad.current == null)
+            return;
+
         // 이미 진동이 있는 경우
 		if (currentVibration != null)
 		{
@@ -134,6 +140,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         GameOver_UI = GameObject.FindObjectOfType<Canvas>().transform.GetChild(4).gameObject;
+        playerShield.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -231,5 +238,18 @@ public class PlayerController : MonoBehaviour
     {
         isDie = true;
         GameOver_UI.SetActive(true);
+    }
+
+	private void OnTriggerStay(Collider other)
+	{
+        if (other.gameObject.TryGetComponent(out IGameItem item))
+		{
+            item.TriggerItemEffect();
+        }
+	}
+
+    public void ToggleShield(bool flag)
+	{
+        playerShield.SetActive(flag);
     }
 }

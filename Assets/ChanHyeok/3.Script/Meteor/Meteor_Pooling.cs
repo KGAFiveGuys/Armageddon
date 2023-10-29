@@ -74,7 +74,6 @@ public class Meteor_Pooling : MonoBehaviour
             float delay = Random.Range(minDelay, maxDelay);
             DeQueue();
             yield return new WaitForSeconds(delay);
-
         }
     }
     public GameObject DeQueue()
