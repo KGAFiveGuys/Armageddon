@@ -24,8 +24,6 @@ public class Gamemanager : MonoBehaviour
     private float score = 0;
     private int bestScore = 0;
 
-
-
     private void Awake()
     {
         bestScore = PlayerPrefs.GetInt(Key, bestScore);
@@ -36,25 +34,36 @@ public class Gamemanager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        score += Time.deltaTime;
-        Score.text = $"Score: {Mathf.FloorToInt(score).ToString()}";
-
-        if (score > bestScore)
-        {
-            bestScore = (int)score;
-            PlayerPrefs.SetInt(Key, bestScore);
-            PlayerPrefs.Save();
-        }
-
-        Best.text = bestScore.ToString();
-        Your.text = Mathf.FloorToInt(score).ToString();
-
+    private PlayerController playerController;
+	private void Start()
+	{
+        playerController = FindObjectOfType<PlayerController>();
     }
+
+	private void Update()
+    {
+		if (!playerController.isDie)
+		{
+            score += Time.deltaTime;
+            Score.text = $"Score: {Mathf.FloorToInt(score),3}";
+        }
+		else
+		{
+            Best.text = $"{bestScore,3}";
+            Your.text = $"{Mathf.FloorToInt(score),3}";
+        }
+    }
+
     public void ReStartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		if (score > bestScore)
+		{
+			bestScore = (int)score;
+			PlayerPrefs.SetInt(Key, bestScore);
+			PlayerPrefs.Save();
+		}
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Dead_UI_On()
