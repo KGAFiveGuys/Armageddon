@@ -2459,7 +2459,7 @@ MonoBehaviour:
   Best_Score: {fileID: 23106565}
   Best: {fileID: 906355419}
   Your: {fileID: 459504554}
-  DeadUI: {fileID: 0}
+  DeadUI: {fileID: 1874119212}
 --- !u!1 &1351806257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3412,9 +3412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23039e377e626dc41b02c11b83a168c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamemanager: {fileID: 0}
-  Best: {fileID: 906355419}
-  Your: {fileID: 459504554}
 --- !u!1 &1966649171
 GameObject:
   m_ObjectHideFlags: 0
