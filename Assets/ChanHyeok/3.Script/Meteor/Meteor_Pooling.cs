@@ -22,9 +22,9 @@ public class Meteor_Pooling : MonoBehaviour
 
     [SerializeField] private GameObject meteor_prefeb;
 
-    [SerializeField] private int Wave = 1; //나중에 게임매니저에서 받아오기
+	[SerializeField] private int Wave = 1; //나중에 게임매니저에서 받아오기
 
-    private Queue<GameObject> ObjectPool = new Queue<GameObject>();
+	private Queue<GameObject> ObjectPool = new Queue<GameObject>();
 
     private void Awake()
     {

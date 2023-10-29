@@ -231,7 +231,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861971066}
-  m_LocalRotation: {x: 0.56718814, y: -0.00000003815652, z: 0.000000026277604, w: 0.8235883}
+  m_LocalRotation: {x: 0.56718814, y: 0.000000038156514, z: -0.000000026277599, w: 0.8235883}
   m_LocalPosition: {x: 0, y: 18.13, z: -6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -459,7 +459,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500975807}
-  m_LocalRotation: {x: 0.56718814, y: -0.00000003815652, z: 0.000000026277604, w: 0.8235883}
+  m_LocalRotation: {x: 0.56718814, y: 0.000000038156514, z: -0.000000026277599, w: 0.8235883}
   m_LocalPosition: {x: 0, y: 18.13, z: -6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -698,6 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39c8f2f3aad67a4b82d46a25a605f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_obj: {fileID: 0}
 --- !u!1 &1845608140
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,6 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSpeed: 30
   StaminaSlider: {fileID: 0}
+  GameOver_UI: {fileID: 0}
   currentSpeed: 0
   Maxstamina: 100
   currentstamina: 0
@@ -1227,20 +1229,36 @@ MonoBehaviour:
   move:
     m_Name: Move
     m_Type: 0
-    m_ExpectedControlType: 
+    m_ExpectedControlType: Vector2
     m_Id: 7892f609-b494-43ea-a9ed-0d9e850e280d
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 24c2f4b9-ff25-4d09-92ab-dbd85ca8dac0
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: StickDeadzone
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 0
     m_Flags: 0
   run:
     m_Name: Run
     m_Type: 0
-    m_ExpectedControlType: 
+    m_ExpectedControlType: Axis
     m_Id: b8b4f44d-4e0b-4b84-93a0-7fab928e038b
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: a27bd07b-02e9-44cb-97a8-0d598dc38cfd
+      m_Path: <Gamepad>/rightShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Run
+      m_Flags: 0
     m_Flags: 0
 --- !u!114 &2603219084660949828
 MonoBehaviour:

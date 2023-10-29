@@ -13,10 +13,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private float currentX = 0.0f;
     private float currentY = 45.0f;
-    private float sensitivityX = 20.0f;
-    private float sensitivityY = 20.0f;
+	private float sensitivityX = 20.0f;
+	private float sensitivityY = 20.0f;
 
-    private void Start()
+	private void Start()
     {
         camTransform = transform;
     }

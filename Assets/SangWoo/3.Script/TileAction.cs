@@ -96,25 +96,26 @@ public class TileAction : MonoBehaviour
             //**메테오 없애줭
         }
 
-        ////Dead : 플레이어 사망
-        //if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
-        //{
-        //    //**플레이어 사망처리 해줭
-        //}
+		//Dead : 플레이어 사망
+		if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
+		{
+            //**플레이어 사망처리 해줭
+            collision.gameObject.GetComponent<PlayerController>().Die();
+		}
 
-        ////Slow : 마찰력 증가
-        //if (currentTile == TileType.Slow && collision.collider.tag.Equals("Player"))
-        //{
-        //    Friction.material.dynamicFriction = frictionForce;
-        //}
+		////Slow : 마찰력 증가
+		//if (currentTile == TileType.Slow && collision.collider.tag.Equals("Player"))
+		//{
+		//    Friction.material.dynamicFriction = frictionForce;
+		//}
 
-        ////Slide : 마찰력 zero
-        //if (currentTile == TileType.Slide && collision.collider.tag.Equals("Player"))
-        //{
-        //    Friction.material.dynamicFriction = 0;
-        //    //**플레이어 조작 불가 해줭
-        //}
-    }
+		////Slide : 마찰력 zero
+		//if (currentTile == TileType.Slide && collision.collider.tag.Equals("Player"))
+		//{
+		//    Friction.material.dynamicFriction = 0;
+		//    //**플레이어 조작 불가 해줭
+		//}
+	}
 
     //타이머함수(일정시간 후 기본타일로 변환)
     private void TimeCheck()

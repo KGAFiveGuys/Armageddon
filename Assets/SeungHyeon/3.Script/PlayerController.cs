@@ -25,50 +25,60 @@ public class PlayerController : MonoBehaviour
     private Animator player_anim;
 
     private TileAction Tiletype;
+    private RaycastHit hit;
+
     public InputAction move;
     public InputAction run;
-    private RaycastHit hit;
-    //private void OnEnable()
-    //{
-    //    move.performed += OnMovePerformed;
-    //    run.performed += OnRunPerformed;
-    //    run.canceled += OnRunCanceled;
+	private void OnEnable()
+	{
+		move.performed += OnMovePerformed;
+        move.canceled += OnMoveCanceled;
+        run.performed += OnRunPerformed;
+		run.canceled += OnRunCanceled;
 
-    //    move.Enable();
-    //    run.Enable();
-    //}
+		move.Enable();
+		run.Enable();
+	}
 
-    //private void OnDestroy()
-    //{
-    //    move.Disable();
-    //    run.Disable();
+	private void OnDestroy()
+	{
+		move.Disable();
+		run.Disable();
 
-    //    move.performed -= OnMovePerformed;
-    //    run.performed -= OnRunPerformed;
-    //    run.canceled -= OnRunCanceled;
-    //}
+		move.performed -= OnMovePerformed;
+        move.canceled -= OnMoveCanceled;
+        run.performed -= OnRunPerformed;
+		run.canceled -= OnRunCanceled;
+	}
 
-    //private void OnMovePerformed(InputAction.CallbackContext context)
-    //{
-    //    var v = context.ReadValue<Vector2>();
-    //    moveDirection = new Vector3(v.x, 0f, v.y);
-    //}
+	private void OnMovePerformed(InputAction.CallbackContext context)
+	{
+		var v = context.ReadValue<Vector2>();
+		moveDirection = new Vector3(v.x, 0f, v.y);
+	}
 
-    //private void OnRunPerformed(InputAction.CallbackContext context)
-    //{
-    //    var isRun = context.ReadValueAsButton();
-    //    if (isRun && currentstamina >= 0)
-    //        isRunning = true;
-    //        currentSpeed = defaultSpeed * 2f;
-    //}
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        moveDirection = Vector3.zero;
+    }
 
-    //private void OnRunCanceled(InputAction.CallbackContext context)
-    //{
-    //    currentSpeed = defaultSpeed;
-    //    isRunning = false;
-    //}
+    private void OnRunPerformed(InputAction.CallbackContext context)
+	{
+		var isRun = context.ReadValueAsButton();
+		if (isRun && currentstamina >= 0)
+			isRunning = true;
+		currentSpeed = defaultSpeed * 2f;
 
-    private void Awake()
+        Run(isRun);
+    }
+
+	private void OnRunCanceled(InputAction.CallbackContext context)
+	{
+		currentSpeed = defaultSpeed;
+		isRunning = false;
+	}
+
+	private void Awake()
     {
         isDie = false;
         StaminaSlider = GameObject.FindObjectOfType<SliderControl>().GetComponent<Slider>();
@@ -83,34 +93,34 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isDie)
+        if (isDie)
+            return;
+
+		//if(Input.GetKeyDown(KeyCode.H))
+		//{
+		//    Die();
+		//}
+		//Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
+		//if (Physics.Raycast(transform.position, Vector3.down, out hit))
+		//{
+		//    Tiletype = hit.transform.GetComponent<TileAction>();
+		//    Debug.Log(Tiletype.currentTile);
+		//}
+
+        bool hasControl = (moveDirection != Vector3.zero);
+        if (hasControl)
         {
-            if(Input.GetKeyDown(KeyCode.H))
+            transform.forward = moveDirection;
+            if (currentstamina <= 0)
             {
-                Die();
+                currentSpeed = defaultSpeed;
             }
-            Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
-            if (Physics.Raycast(transform.position, Vector3.down, out hit))
-            {
-                Tiletype = hit.transform.GetComponent<TileAction>();
-                Debug.Log(Tiletype.currentTile);
-            }
-            bool hasControl = (moveDirection != Vector3.zero);
-            if (hasControl)
-            {
-                transform.forward = moveDirection;
-                if (currentstamina <= 0)
-                {
-                    currentSpeed = defaultSpeed;
-                }
-                //player_rb.MovePosition(player_rb.position + moveDirection * currentSpeed * Time.deltaTime);
-                player_rb.AddForce(moveDirection.normalized * currentSpeed, ForceMode.Force);
-                player_anim.SetInteger("AnimationPar", 1);
-            }
-            else
-            {
-                player_anim.SetInteger("AnimationPar", 0);
-            }
+            player_rb.AddForce(moveDirection.normalized * currentSpeed, ForceMode.Force);
+            player_anim.SetInteger("AnimationPar", 1);
+        }
+        else
+        {
+            player_anim.SetInteger("AnimationPar", 0);
         }
     }
     private void OnMove(InputValue value)
@@ -123,7 +133,12 @@ public class PlayerController : MonoBehaviour
     }
     private void OnRun(InputValue value)
     {
-        if (value.isPressed)
+        Run(value.isPressed);
+    }
+
+    private void Run(bool flag)
+	{
+        if (flag)
         {
             Debug.Log("쉬프트 누름");
             StopCoroutine(FillStamina());
@@ -138,6 +153,7 @@ public class PlayerController : MonoBehaviour
             currentSpeed = defaultSpeed;
         }
     }
+
     private IEnumerator UseStamina()
     {
         isRunning = true;

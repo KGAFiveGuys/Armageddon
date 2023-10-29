@@ -42,8 +42,7 @@ public class Meteor_Controller : MonoBehaviour
         }
         else if (gameObject.activeSelf && col.gameObject.CompareTag("Player"))
         {
-            
-            Destroy(col.gameObject); // 플레이어 다이메소드로 바꿔주세요
+            col.gameObject.GetComponent<PlayerController>().Die();
 
             if (gameObject.CompareTag("Meteor"))
             {
