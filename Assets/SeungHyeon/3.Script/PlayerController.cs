@@ -29,14 +29,15 @@ public class PlayerController : MonoBehaviour
 
     public InputAction move;
     public InputAction run;
-	private void OnEnable()
+
+    private void OnEnable()
 	{
 		move.performed += OnMovePerformed;
         move.canceled += OnMoveCanceled;
         run.performed += OnRunPerformed;
 		run.canceled += OnRunCanceled;
 
-		move.Enable();
+        move.Enable();
 		run.Enable();
 	}
 
@@ -45,11 +46,11 @@ public class PlayerController : MonoBehaviour
 		move.Disable();
 		run.Disable();
 
-		move.performed -= OnMovePerformed;
+        move.performed -= OnMovePerformed;
         move.canceled -= OnMoveCanceled;
         run.performed -= OnRunPerformed;
 		run.canceled -= OnRunCanceled;
-	}
+    }
 
 	private void OnMovePerformed(InputAction.CallbackContext context)
 	{
@@ -78,7 +79,30 @@ public class PlayerController : MonoBehaviour
 		isRunning = false;
 	}
 
-	private void Awake()
+    public void TriggerVibration(Explosion explosion)
+	{
+        if (currentVibration != null)
+            StopCoroutine(currentVibration);
+
+        currentVibration = Vibrate(explosion);
+        StartCoroutine(currentVibration);
+	}
+
+    private IEnumerator currentVibration;
+    private IEnumerator Vibrate(Explosion explosion)
+	{
+        float elapsedTime = 0f;
+		while (elapsedTime < explosion.Duration)
+		{
+            elapsedTime += Time.deltaTime;
+            float intensity = explosion.IntensityCurve.Evaluate(elapsedTime / explosion.Duration);
+            Gamepad.current.SetMotorSpeeds(intensity, intensity);
+            yield return null;
+        }
+        Gamepad.current.SetMotorSpeeds(0f, 0f);
+    }
+
+    private void Awake()
     {
         isDie = false;
         StaminaSlider = GameObject.FindObjectOfType<SliderControl>().GetComponent<Slider>();

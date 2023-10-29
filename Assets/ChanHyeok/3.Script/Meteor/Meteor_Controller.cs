@@ -2,15 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum VibrationType
+{
+    Default,
+    Special,
+}
+
+[System.Serializable]
+public class Explosion
+{
+    [field:SerializeField] public VibrationType VibrationType { get; set; }
+    [field: SerializeField] public float Duration { get; set; }
+    [field: SerializeField] public AnimationCurve IntensityCurve { get; set; }
+}
+
 public class Meteor_Controller : MonoBehaviour
 {
+    [SerializeField] private Explosion explosion;
+
+    private PlayerController playerController;
     private Rigidbody meteor_r;
     [SerializeField] private float FallingSpeed;
     [SerializeField] private int Wave = 1; //나중에 게임매니저에서 받아오기
+
     private void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
         meteor_r = GetComponent<Rigidbody>();
-        
+
         SettingSpeed();
     }
 
@@ -32,12 +51,18 @@ public class Meteor_Controller : MonoBehaviour
                 DestroySound.instance.PlayDestroySound(0);
                 Debug.Log("기본 메테오 충돌");
                 Meteor_Pooling.instance.ReturnToQueue(gameObject);
+
+				if (playerController != null)
+                    playerController.TriggerVibration(explosion);
             }
             else if(gameObject.CompareTag("Dead")|| gameObject.CompareTag("Slide")|| gameObject.CompareTag("Slow"))
             {
                 DestroySound.instance.PlayDestroySound(1);
                 Debug.Log("특수 메테오 충돌");
                 Destroy(gameObject);
+
+                if (playerController != null)
+                    playerController.TriggerVibration(explosion);
             }
         }
         else if (gameObject.activeSelf && col.gameObject.CompareTag("Player"))
