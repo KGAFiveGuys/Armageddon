@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteor_Movement : MonoBehaviour
+public class Meteor_Controller : MonoBehaviour
 {
     private Rigidbody meteor_r;
-    private SphereCollider meteor_col;
     [SerializeField] private float FallingSpeed;
     [SerializeField] private int Wave = 1; //나중에 게임매니저에서 받아오기
     private void Start()
     {
         meteor_r = GetComponent<Rigidbody>();
-        meteor_col = GetComponent<SphereCollider>();
         
         SettingSpeed();
     }
@@ -31,16 +29,37 @@ public class Meteor_Movement : MonoBehaviour
         {
             if (gameObject.CompareTag("Meteor"))
             {
+                DestroySound.instance.PlayDestroySound(0);
                 Debug.Log("기본 메테오 충돌");
                 Meteor_Pooling.instance.ReturnToQueue(gameObject);
             }
             else if(gameObject.CompareTag("Dead")|| gameObject.CompareTag("Slide")|| gameObject.CompareTag("Slow"))
             {
+                DestroySound.instance.PlayDestroySound(1);
                 Debug.Log("특수 메테오 충돌");
                 Destroy(gameObject);
             }
         }
-        
+        else if (gameObject.activeSelf && col.gameObject.CompareTag("Player"))
+        {
+            
+            Destroy(col.gameObject); // 플레이어 다이메소드로 바꿔주세요
+
+            if (gameObject.CompareTag("Meteor"))
+            {
+                DestroySound.instance.PlayDestroySound(0);
+                Meteor_Pooling.instance.ReturnToQueue(gameObject);
+                Debug.Log("플레이어 기본 메테오 충돌");
+            }
+            else if (gameObject.CompareTag("Dead") || gameObject.CompareTag("Slide") || gameObject.CompareTag("Slow"))
+            {
+                DestroySound.instance.PlayDestroySound(1);
+                Destroy(gameObject);
+                Debug.Log("플레이어 특수 메테오 충돌");
+            }
+        }
+
+
     }
     private void Falling()
     {
