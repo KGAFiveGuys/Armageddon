@@ -21,7 +21,8 @@ public class TileAction : MonoBehaviour
     [SerializeField] private MeshCollider TilePhysicMat;
     [SerializeField] private PhysicMaterial[] PhysicMats = new PhysicMaterial[3];
 
-    [SerializeField] private int Timer = 3;
+    [SerializeField] private int TimeMin = 3;
+    [SerializeField] private int TimeMax = 5;
     private float timeFlow = 0;
 
     [SerializeField] private GameObject ItemShieldPrefab;
@@ -124,6 +125,7 @@ public class TileAction : MonoBehaviour
     private IEnumerator CheckTime()
 	{
         float elapsdeTime = 0f;
+        int Timer = Random.Range(TimeMin, TimeMax);
 		while (elapsdeTime < Timer)
 		{
             elapsdeTime += Time.deltaTime;
