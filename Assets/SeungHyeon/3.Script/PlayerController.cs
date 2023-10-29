@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour
         move.canceled -= OnMoveCanceled;
         run.performed -= OnRunPerformed;
 		run.canceled -= OnRunCanceled;
+
+		if (currentVibration != null)
+		{
+            
+		}
     }
 
 	private void OnMovePerformed(InputAction.CallbackContext context)
@@ -69,26 +74,39 @@ public class PlayerController : MonoBehaviour
 		if (isRun && currentstamina >= 0)
 			isRunning = true;
 		currentSpeed = defaultSpeed * 2f;
-
-        Run(isRun);
+        HandleStamina(isRun);
     }
 
 	private void OnRunCanceled(InputAction.CallbackContext context)
 	{
 		currentSpeed = defaultSpeed;
 		isRunning = false;
-	}
+        HandleStamina(false);
+    }
 
     public void TriggerVibration(Explosion explosion)
 	{
-        if (currentVibration != null)
-            StopCoroutine(currentVibration);
+        // 이미 진동이 있는 경우
+		if (currentVibration != null)
+		{
+            if (explosion.VibrationType.Equals(currentVibrationType)        // VibrationType 일치
+                || explosion.VibrationType.Equals(VibrationType.Special))   // VibrationType.Special
+            {
+                StopCoroutine(currentVibration);
+                currentVibration = Vibrate(explosion);
+                StartCoroutine(currentVibration);
+            }
+        }
 
+        // 진동이 없는 경우
         currentVibration = Vibrate(explosion);
         StartCoroutine(currentVibration);
-	}
+        currentVibrationType = explosion.VibrationType;
+    }
 
     private IEnumerator currentVibration;
+    private VibrationType currentVibrationType;
+
     private IEnumerator Vibrate(Explosion explosion)
 	{
         float elapsedTime = 0f;
@@ -100,6 +118,8 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         Gamepad.current.SetMotorSpeeds(0f, 0f);
+        
+        currentVibration = null;
     }
 
     private void Awake()
@@ -157,21 +177,21 @@ public class PlayerController : MonoBehaviour
     }
     private void OnRun(InputValue value)
     {
-        Run(value.isPressed);
+        HandleStamina(value.isPressed);
     }
 
-    private void Run(bool flag)
+    private void HandleStamina(bool flag)
 	{
         if (flag)
         {
-            Debug.Log("쉬프트 누름");
+            //Debug.Log("쉬프트 누름");
             StopCoroutine(FillStamina());
             StartCoroutine(UseStamina());
             currentSpeed = defaultSpeed * 2f;
         }
         else
         {
-            Debug.Log("쉬프트 떼짐");
+            //Debug.Log("쉬프트 떼짐");
             StopCoroutine(UseStamina());
             StartCoroutine(FillStamina());
             currentSpeed = defaultSpeed;

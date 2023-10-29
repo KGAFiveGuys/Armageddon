@@ -33,11 +33,11 @@ public class TileAction : MonoBehaviour
         TryGetComponent(out TilePhysicMat);
     }
 
-    private void Update()
-    {
-        //현재타일 모드 실행
-        Invoke(currentTile.ToString(), 0);
-    }
+    //private void Update()
+    //{
+    //    //현재타일 모드 실행
+    //    Invoke(currentTile.ToString(), 0);
+    //}
 
     private void ChangeTile(string tagname)
     {
@@ -45,42 +45,49 @@ public class TileAction : MonoBehaviour
         {
             case "Slow":
                 currentTile = TileType.Slow;
+                TileMat.material = Mats[2];
+                TilePhysicMat.material = PhysicMats[1];
+                TimeCheck();
                 break;
             case "Dead":
                 currentTile = TileType.Dead;
+                TileMat.material = Mats[1];
+                TimeCheck();
                 break;
             case "Slide":
                 currentTile = TileType.Slide;
+                TileMat.material = Mats[3];
+                TilePhysicMat.material = PhysicMats[2];
+                TimeCheck();
                 break;
         }
     }
 
-    private void Default()
-    {
-        TileMat.material = Mats[0];
-        TilePhysicMat.material = PhysicMats[0];
-    }
+    //private void Default()
+    //{
+    //    TileMat.material = Mats[0];
+    //    TilePhysicMat.material = PhysicMats[0];
+    //}
 
-    private void Dead()
-    {
-        TileMat.material = Mats[1];
-        TimeCheck();
-    }
+    //private void Dead()
+    //{
+    //    TileMat.material = Mats[1];
+    //    TimeCheck();
+    //}
 
-    private void Slow()
-    {
-        TileMat.material = Mats[2];
-        TilePhysicMat.material = PhysicMats[1];
-        TimeCheck();
-    }
+    //private void Slow()
+    //{
+    //    TileMat.material = Mats[2];
+    //    TilePhysicMat.material = PhysicMats[1];
+    //    TimeCheck();
+    //}
 
-    private void Slide()
-    {
-        TileMat.material = Mats[3];
-        TilePhysicMat.material = PhysicMats[2];
-        TimeCheck();
-    }
-
+    //private void Slide()
+    //{
+    //    TileMat.material = Mats[3];
+    //    TilePhysicMat.material = PhysicMats[2];
+    //    TimeCheck();
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -93,42 +100,47 @@ public class TileAction : MonoBehaviour
                 timeFlow = 0;
             }
             ChangeTile(collision.collider.tag);
-            //**메테오 없애줭
         }
-
-		//Dead : 플레이어 사망
-		if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
-		{
-            //**플레이어 사망처리 해줭
-            collision.gameObject.GetComponent<PlayerController>().Die();
-		}
-
-		////Slow : 마찰력 증가
-		//if (currentTile == TileType.Slow && collision.collider.tag.Equals("Player"))
-		//{
-		//    Friction.material.dynamicFriction = frictionForce;
-		//}
-
-		////Slide : 마찰력 zero
-		//if (currentTile == TileType.Slide && collision.collider.tag.Equals("Player"))
-		//{
-		//    Friction.material.dynamicFriction = 0;
-		//    //**플레이어 조작 불가 해줭
-		//}
 	}
+
+	private void OnCollisionStay(Collision collision)
+	{
+        // OnCollisionEnter의 경우
+        // 플레이어가 이미 Tile에 올라간 상태에서 Tile이 변경 되면 적용되지 않음
+        if (currentTile == TileType.Dead && collision.collider.tag.Equals("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().Die();
+        }
+    }
+
+    private IEnumerator currentTimer;
+    private IEnumerator CheckTime()
+	{
+        float elapsdeTime = 0f;
+		while (elapsdeTime < Timer)
+		{
+            elapsdeTime += Time.deltaTime;
+            yield return null;
+		}
+        currentTile = TileType.Default;
+        TileMat.material = Mats[0];
+        TilePhysicMat.material = PhysicMats[0];
+    }
 
     //타이머함수(일정시간 후 기본타일로 변환)
     private void TimeCheck()
     {
-        timeFlow += Time.deltaTime;
-        if (timeFlow >= Timer)
-        {
-            currentTile = TileType.Default;
-            timeFlow = 0;
-            //if (Friction.material.dynamicFriction != 0.6f)
-            //{
-            //    Friction.material.dynamicFriction = 0.6f;
-            //}
-        }
+		//timeFlow += Time.deltaTime;
+		//if (timeFlow >= Timer)
+		//{
+		//    currentTile = TileType.Default;
+		//    timeFlow = 0;
+		//}
+
+		if (currentTimer != null)
+            StopCoroutine(currentTimer);
+
+        currentTimer = CheckTime();
+        StartCoroutine(currentTimer);
     }
 }

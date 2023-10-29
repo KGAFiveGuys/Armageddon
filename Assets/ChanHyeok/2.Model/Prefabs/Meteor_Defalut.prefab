@@ -129,13 +129,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion:
     <VibrationType>k__BackingField: 0
-    <Duration>k__BackingField: 0.5
+    <Duration>k__BackingField: 0.3
     <IntensityCurve>k__BackingField:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.4
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -143,22 +143,22 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.57642144
-        value: 0.05488001
-        inSlope: 0.24757886
-        outSlope: 0.24757886
+        time: 0.71250004
+        value: 0.3292453
+        inSlope: -0.2157636
+        outSlope: -0.2157636
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.3278674
-        outWeight: 0.33333334
+        inWeight: 0.22098792
+        outWeight: 0.46793428
       - serializedVersion: 3
         time: 1
-        value: 0.4
-        inSlope: 2
-        outSlope: 2
+        value: 0.1
+        inSlope: -1.5849067
+        outSlope: -1.5849067
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.041382093
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -231,7 +231,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861971066}
-  m_LocalRotation: {x: 0.56718814, y: 0.000000038156514, z: -0.000000026277599, w: 0.8235883}
+  m_LocalRotation: {x: 0.56718814, y: -0.00000003815652, z: 0.000000026277604, w: 0.8235883}
   m_LocalPosition: {x: 0, y: 18.13, z: -6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -459,7 +459,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500975807}
-  m_LocalRotation: {x: 0.56718814, y: 0.000000038156514, z: -0.000000026277599, w: 0.8235883}
+  m_LocalRotation: {x: 0.56718814, y: -0.00000003815652, z: 0.000000026277604, w: 0.8235883}
   m_LocalPosition: {x: 0, y: 18.13, z: -6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -483,7 +483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1542296097
 Light:
   m_ObjectHideFlags: 0
@@ -1260,71 +1260,6 @@ MonoBehaviour:
       m_Action: Run
       m_Flags: 0
     m_Flags: 0
-  vibrate:
-    m_Name: Vibrate
-    m_Type: 0
-    m_ExpectedControlType: Axis
-    m_Id: a8ab95d2-a978-4843-bec9-fc485128f207
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: c08a090c-e50b-401d-bd54-ffcb65a80055
-      m_Path: <Gamepad>/buttonSouth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Vibrate
-      m_Flags: 0
-    m_Flags: 0
-  lowMotorCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  highMotorCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &2603219084660949828
 MonoBehaviour:
   m_ObjectHideFlags: 0
