@@ -56,4 +56,9 @@ public class Gamemanager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void Dead_UI_On()
+    {
+        DeadUI.SetActive(true);
+    }
 }

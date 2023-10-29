@@ -2459,6 +2459,7 @@ MonoBehaviour:
   Best_Score: {fileID: 23106565}
   Best: {fileID: 906355419}
   Your: {fileID: 459504554}
+  DeadUI: {fileID: 0}
 --- !u!1 &1351806257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2970,6 +2971,7 @@ MonoBehaviour:
   audioSource: {fileID: 1675880055}
   Jump: {fileID: 8300000, guid: 9ec5a59782870c346958966800973cce, type: 3}
   Boom: {fileID: 8300000, guid: ae989759fab798241a9107747500da71, type: 3}
+  Die: {fileID: 8300000, guid: 7bd2ace07659df748a6e733c4d46a060, type: 3}
 --- !u!1 &1692045851
 GameObject:
   m_ObjectHideFlags: 0
