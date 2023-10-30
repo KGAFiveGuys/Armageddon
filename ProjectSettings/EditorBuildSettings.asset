@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/SeungHyeon/1.Scene/Intro.unity
+    guid: 4800c4936a52cf6408469b45b91a14c2
+  - enabled: 1
     path: Assets/Main/MainScene.unity
     guid: 1f6acadde8b2610469061b28b0619cb9
   - enabled: 1
