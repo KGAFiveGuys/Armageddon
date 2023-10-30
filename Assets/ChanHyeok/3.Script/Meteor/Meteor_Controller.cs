@@ -46,17 +46,21 @@ public class Meteor_Controller : MonoBehaviour
         
         if (gameObject.activeSelf && layer == LayerMask.NameToLayer("Ground"))
         {
+            
             if (gameObject.CompareTag("Meteor"))
             {
+                SFX_Audio.instance.Play_BoomDestory_Sound();
                 DestroySound.instance.PlayDestroySound(0);
                 Debug.Log("기본 메테오 충돌");
                 Meteor_Pooling.instance.ReturnToQueue(gameObject);
+                
 
 				if (playerController != null)
                     playerController.TriggerVibration(explosion);
             }
             else if(gameObject.CompareTag("Dead")|| gameObject.CompareTag("Slide")|| gameObject.CompareTag("Slow"))
             {
+                SFX_Audio.instance.Play_BoomDestory_special_Sound();
                 DestroySound.instance.PlayDestroySound(1);
                 Debug.Log("특수 메테오 충돌");
                 Destroy(gameObject);
