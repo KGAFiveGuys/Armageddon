@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameStart_btn : MonoBehaviour
 {
+    private Gamemanager gamemanager;
+
+    private void Awake()
+    {
+        gamemanager = FindObjectOfType<Gamemanager>();
+    }
+
     public void Start_MainGame_btn()
     {
         GameObject[] gameObjectsInMainScene = GameObject.FindObjectsOfType<GameObject>();
@@ -12,6 +19,9 @@ public class GameStart_btn : MonoBehaviour
         {
             Destroy(obj);
         }
+
+        gamemanager.SaveBestScores();
+        gamemanager.LoadBestScores();
 
         SceneLoader.Instance.UnloadScenes();
         SceneLoader.Instance.Start_Game();
