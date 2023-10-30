@@ -125,7 +125,8 @@ public class TileAction : MonoBehaviour
     private IEnumerator CheckTime()
 	{
         float elapsdeTime = 0f;
-        int Timer = Random.Range(TimeMin, TimeMax);
+        int Timer = Random.Range(TimeMin, TimeMax + 1);
+        Debug.Log(Timer);
 		while (elapsdeTime < Timer)
 		{
             elapsdeTime += Time.deltaTime;
