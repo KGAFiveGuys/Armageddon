@@ -65,6 +65,7 @@ public class Meteor_Pooling : MonoBehaviour
         meteor.transform.position = new Vector3(X, Spawn_Y, Z);
         meteor.transform.SetParent(instance.transform);
         instance.ObjectPool.Enqueue(meteor);
+        
     }
 
     public IEnumerator Start_Armageddon()
@@ -81,6 +82,7 @@ public class Meteor_Pooling : MonoBehaviour
         if (ObjectPool.Count > 0) 
         {
             GameObject meteor = ObjectPool.Dequeue();
+            SFX_Audio.instance.Play_Boon_Sound();
 
             meteor.SetActive(true);
             //meteor.gameObject.transform.SetParent(null);

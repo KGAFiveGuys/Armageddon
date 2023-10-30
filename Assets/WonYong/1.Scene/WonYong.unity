@@ -3083,7 +3083,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1675880055}
   Jump: {fileID: 8300000, guid: 9ec5a59782870c346958966800973cce, type: 3}
-  Boom: {fileID: 8300000, guid: ae989759fab798241a9107747500da71, type: 3}
+  BoomFalling: {fileID: 8300000, guid: 46bffcacd87fe6045937baef88388b7d, type: 3}
+  BoomDestory: {fileID: 8300000, guid: ed5a085a57a76af4caf2e6f4d6b15483, type: 3}
+  BoomDestory_special: {fileID: 8300000, guid: f567cbf96999a984396b7a29bfa6dd34, type: 3}
   Die: {fileID: 8300000, guid: 7bd2ace07659df748a6e733c4d46a060, type: 3}
 --- !u!1 &1692045851
 GameObject:

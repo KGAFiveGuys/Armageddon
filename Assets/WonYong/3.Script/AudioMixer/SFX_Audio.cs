@@ -8,7 +8,9 @@ public class SFX_Audio : MonoBehaviour
     public AudioSource audioSource;
     //----audioclip //
     public AudioClip Jump;
-    public AudioClip Boom;
+    public AudioClip BoomFalling;
+    public AudioClip BoomDestory;
+    public AudioClip BoomDestory_special;
     public AudioClip Die;
 
     private void Awake()
@@ -30,15 +32,29 @@ public class SFX_Audio : MonoBehaviour
     {
         audioSource.PlayOneShot(Jump);
     }
-
-     public  void Play_Boon_Sound()
+    public void Play_BoomDestory_Sound()
     {
-        audioSource.PlayOneShot(Boom);
+        audioSource.PlayOneShot(BoomDestory);
     }
+
+    
+
+    public void Play_BoomDestory_special_Sound()
+    {
+        audioSource.PlayOneShot(BoomDestory_special);
+    }
+
+    public  void Play_Boon_Sound()
+    {
+        audioSource.PlayOneShot(BoomFalling, 3f);
+    }
+
+
+
 
     public void Play_Die_Sound()
     {
-        audioSource.PlayOneShot(Boom);
+        audioSource.PlayOneShot(Die);
     }
 
 
